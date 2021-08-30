@@ -1,0 +1,71 @@
+# ---
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: k8s-lab-webapp
+# spec:
+#   containers:
+#     - name: webapp
+#       image: localhost:5000/k8s-lab-webapp:v1
+#       imagePullPolicy: IfNotPresent
+
+# ---
+# apiVersion: apps/v1
+# kind: ReplicaSet
+# metadata:
+#   name: k8s-lab-webapp
+# spec:
+#   selector:
+#     matchLabels:
+#       app: k8s-lab-webapp
+#   replicas: 1
+#   template:
+#     metadata:
+#       name: k8s-lab-webapp
+#       labels:
+#         app: k8s-lab-webapp
+#     spec:
+#       containers:
+#         - name: webapp
+#           image: localhost:5000/k8s-lab-webapp:v1
+#           imagePullPolicy: IfNotPresent
+#           ports:
+#             - containerPort: 8000
+#
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-lab-webapp-deployment
+  labels:
+    app: k8s-lab-webapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: k8s-lab-webapp
+  template:
+    metadata:
+      labels:
+        app: k8s-lab-webapp
+    spec:
+      containers:
+        - name: webapp
+          image: localhost:5000/k8s-lab-webapp:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-lab-webapp
+spec:
+  selector:
+    app: k8s-lab-webapp
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: webapp
+  type: NodePort
