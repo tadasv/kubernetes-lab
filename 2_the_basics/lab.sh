@@ -8,7 +8,6 @@ command_build() {
 	docker build -t $REGISTRY/k8s-lab-webapp:$version .
 }
 
-
 command_push() {
 	local version=$1
 	docker push $REGISTRY/k8s-lab-webapp:$version
@@ -22,8 +21,17 @@ command_delete() {
 	kubectl delete -f ./app.yaml
 }
 
+command_service_node_port() {
+	kubectl get service k8s-lab-webapp -o go-template --template='{{ (index .spec.ports 0).nodePort }}'
+}
+
 command_cluster_ip() {
-	docker network inspect kind | jq '.[0].Containers | .[] | select(.Name=="kind-control-plane") | .IPv4Address '
+	docker network inspect kind | jq '.[0].Containers | .[] | select(.Name=="kind-control-plane") | .IPv4Address ' | sed 's/"//g' | sed 's/\/.*$//'
+}
+
+command_service_address() {
+	# service address accesible from the host
+	echo "$($PWD/$EXE cluster_ip):$($PWD/$EXE service_node_port)"
 }
 
 EXE=${0##*/}

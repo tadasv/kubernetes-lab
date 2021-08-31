@@ -1,6 +1,6 @@
 # 2. The Basics
 
-In this section we're covering Kubernetes basics. This mostly based on the
+In this section we're covering Kubernetes basics. This is mostly based on the
 [Kubernetes Basics
 tutorial](https://kubernetes.io/docs/tutorials/kubernetes-basics/) modules 2
 through 6 thus it's recommended to go through the official tutorial.
@@ -21,3 +21,8 @@ the local registry to the push command.
 $ ./lab.sh build v1
 $ ./lab.sh push v1
 ```
+
+## Service configuration
+
+Service is configured via `app.yaml` file. It can be deployed with `apply`
+command and removed with `delete` command.
