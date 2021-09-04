@@ -26,3 +26,8 @@ kubernetes            ClusterIP   10.96.0.1       <none>        443/TCP         
 tadas@fractal:3_multi_service$ curl $(./lab.sh cluster_ip):32400
 response from remote service: Current time: 2021-09-02 12:55:07.28839101 +0000 UTC m=+839.431593603
 ```
+
+## Sidecar container
+
+There's a deployment (`app-with-sidecar.yaml`) which contains a sidecar
+example. Sidecar containers are accessible over `localhost`.

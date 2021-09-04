@@ -18,6 +18,10 @@ command_apply() {
 	kubectl apply -f ./app.yaml
 }
 
+command_apply_sidecar() {
+	kubectl apply -f ./app-with-sidecar.yaml
+}
+
 command_delete() {
 	kubectl delete -f ./app.yaml
 }
